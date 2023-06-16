@@ -32,3 +32,9 @@ Route::prefix('api')->middleware('auth:sanctum')->group(function () {
 });
 
 
+Route::middleware('auth:sanctum')->group(function () {
+    Route::middleware('admin')->prefix('posts')->group(function () {
+        Route::get('unpublished', [PostController::class, 'getUnpublishedPosts']);
+    });
+});
+

@@ -21,4 +21,17 @@ class PostController extends Controller
 
         return response()->json(['message' => 'Post created successfully.'], 201);
     }
+
+    public function getUnpublishedPosts(Request $request)
+    {
+        $perPage = $request->query('per_page', 10); 
+        $sortBy = $request->query('sort_by', 'created_at');
+        $sortDirection = $request->query('sort_direction', 'desc');
+
+        $posts = Post::where('is_published', false)
+            ->orderBy($sortBy, $sortDirection)
+            ->paginate($perPage);
+
+        return response()->json(['posts' => $posts], 201);
+    }
 }
