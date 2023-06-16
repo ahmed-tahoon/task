@@ -33,5 +33,28 @@ class PostController extends Controller
             ->paginate($perPage);
 
         return response()->json(['posts' => $posts], 201);
+    
+    
     }
+
+    public function update(Request $request, Post $post)
+    {
+        $request->validate([
+            'action' => 'required|in:accept,reject',
+        ]);
+
+        if ($request->input('action') === 'accept') {
+            $post->is_published = true;
+            $message = 'Post accepted successfully.';
+        } else {
+            $post->is_published = false;
+            $message = 'Post rejected successfully.';
+        }
+
+        $post->save();
+
+        return response()->json(['message' => $message], 200);
+    }
+
+    
 }
