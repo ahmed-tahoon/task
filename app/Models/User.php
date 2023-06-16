@@ -50,6 +50,9 @@ public function posts()
 {
     return $this->hasMany(Post::class);
 }
-
+public function devices()
+{
+    return $this->belongsToMany(Device::class);
+}
 
 }

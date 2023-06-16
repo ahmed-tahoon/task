@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\DeviceUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +29,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('api')->middleware('auth:sanctum')->group(function () {
     Route::prefix('v1')->group(function () {
         Route::post('posts', [PostController::class, 'store']);
+        Route::get('devices/{device_id}/users', [DeviceUserController::class, 'getDeviceUsers']);
         Route::get('posts', [PostController::class, 'index']);
     });
 });
