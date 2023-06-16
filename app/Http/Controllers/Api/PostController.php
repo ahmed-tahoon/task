@@ -56,5 +56,26 @@ class PostController extends Controller
         return response()->json(['message' => $message], 200);
     }
 
-    
+ public function index(Request $request)
+  {
+    $query = Post::where('is_published', true);
+
+    if ($request->query('filter') === 'me') {
+        $user = Auth::user();
+        $query->where('user_id', $user->id);
+    }
+
+    $posts = $query->paginate(15);
+
+    return response()->json([
+        'data' => $posts->items(),
+        'pagination' => [
+            'total' => $posts->total(),
+            'count' => $posts->count(),
+            'per_page' => $posts->perPage(),
+            'current_page' => $posts->currentPage(),
+            'total_pages' => $posts->lastPage(),
+        ],
+    ]);
+}
 }

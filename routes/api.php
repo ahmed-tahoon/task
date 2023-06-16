@@ -28,8 +28,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('api')->middleware('auth:sanctum')->group(function () {
     Route::prefix('v1')->group(function () {
         Route::post('posts', [PostController::class, 'store']);
+        Route::get('posts', [PostController::class, 'index']);
     });
 });
+
 
 
 Route::middleware('auth:sanctum')->group(function () {
